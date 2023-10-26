@@ -30,3 +30,12 @@ def play_game():
             continue
 
     return 0
+
+
+def main():
+    play_game()
+    return 0
+
+
+if __name__ == "__main__":
+    main()
