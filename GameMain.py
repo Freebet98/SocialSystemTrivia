@@ -16,7 +16,14 @@ def play_game():
         statement = GameFunctions.switch_dict(word)
         lst_qa = statement[0]
         ran_lst = statement[1]
+        print(lst_qa[0])
         print(ran_lst)
+        print("What is the Answer?")
+        user_val = input("Enter a Number 1 - 4")
+        if ran_lst[int(user_val) - 1] == lst_qa[int(user_val) - 1]:
+            counter += roll
+            continue
+        else:
+            continue
 
-
-        counter += roll
+    return 0
