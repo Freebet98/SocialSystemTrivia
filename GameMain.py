@@ -9,11 +9,14 @@ def play_game():
     while 1:
         if counter >= board_length:
             break
-
+        print(counter)
         roll = GameFunctions.roll_dice(dice_val)
+        print(roll)
         word = GameFunctions.check_spot(roll, counter)
+        print(word)
 
         statement = GameFunctions.switch_dict(word)
+        print(statement)
         lst_qa = statement[0]
         ran_lst = statement[1]
         print(lst_qa[0])
