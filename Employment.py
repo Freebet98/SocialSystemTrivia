@@ -90,9 +90,9 @@ employ_ans_dict = {'Resume': ['Resume', 'Curriculum Vitae', 'Bio-data', 'Job App
                    'Collaboration': ['Collaboration', 'Teamwork', 'Cooperation', 'Group synergy'],
                    'Stress management': ['Stress management', 'Stress control', 'Stress handling', 'Stress moderation'],
                    'Problem-solving': ['Problem-solving', 'Issue resolution', 'Dilemma analysis', 'Challenge tackling'],
-                   'Digital literacy': ['Digital literacy'],
-                   'Writing skills': ['Writing skills'],
-                   'Plan-Do-Check-Act': ['Plan-Do-Check-Act'],
+                   'Digital literacy': ['Digital literacy', 'Digital Archeology', 'Binary Coding', 'Technomics'],
+                   'Writing skills': ['Writing skills', 'Graphite Artistry', 'Verbal Dexterity', 'Narrative Juggling'],
+                   'Plan-Do-Check-Act': ['Plan-Do-Check-Act', 'Perfectly-Defined-Comprehensive-Analysis', 'Produce-Distribute-Consume-Adjust', 'Prevent Disaster-Control Actions'],
                    'Cultural competence': ['Cultural competence'],
                    'Creativity': ['Creativity'],
                    'Conflict resolution': ['Conflict resolution'],
@@ -100,7 +100,7 @@ employ_ans_dict = {'Resume': ['Resume', 'Curriculum Vitae', 'Bio-data', 'Job App
                    'Electrician': ['Electrician'],
                    'Archaeology': ['Archaeology'],
                    'Glassblower': ['Glassblower'],
-                   'Civil Engineering': ['Civil Engineering','Mechanical Engineering', 'Electrical Engineering', 'Aerospace Engineering']
+                   'Civil Engineering': ['Civil Engineering','Mechanical Engineering', 'Electrical Engineering', 'Aerospace Engineering'],
                    'Cosmetology': ['Cosmetology'],
                    'Radiology': ['Radiology'],
                    'Pastry Chef': ['Pastry Chef']}
