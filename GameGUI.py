@@ -17,7 +17,7 @@ employColor = (171, 147, 197)
 # Culture Color
 cultColor = (226, 145, 190)
 # Relationship Color
-RelatColor = (61, 142, 204)
+relatColor = (61, 142, 204)
 # Black Color
 blackColor = (35, 31, 32)
 # white Color
