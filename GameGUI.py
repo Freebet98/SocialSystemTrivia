@@ -4,40 +4,43 @@ from pygame.locals import *
 
 # initialize constructor
 pygame.init()
-
-# screen ize
+#Variables
+# screen size
 width = 1600
 height = 900
 
-# open window
-window = pygame.display.set_mode((width, height))
-
+#Colors
 # language color
 langColor = (111, 191, 87)
-
 # Employment color
 employColor = (171, 147, 197)
-
 # Culture Color
 cultColor = (226, 145, 190)
-
 # Relationship Color
 RelatColor = (61, 142, 204)
-
 # Black Color
 blackColor = (35, 31, 32)
-
 # white Color
-whiteColor = ()
-
+whiteColor = (255,255,255)
 # light shade of button
 color_light = (170, 170, 170)
-
 # dark shade of button
 color_dark = (100, 100, 100)
 
+#Fonts
 # defining a font
 smallFont = pygame.font.SysFont('Corbel', 35)
+cardFont = pygame.font.SysFont('Corbel', 35)
+
+#images
+background = pygame.image.load('board-01.png')
+langCard = pygame.image.load('Langauge2-01.jpg')
+employCard = pygame.image.load('Employment2-01.jpg')
+cultCard = pygame.image.load('Culture2-01.jpg')
+relateCard = pygame.image.load('Relationship2-01.jpg')
+
+# open window
+window = pygame.display.set_mode((width, height))
 
 # rendering a text written in this font
 text = smallFont.render('quit', True, color)
@@ -73,7 +76,7 @@ while True:
     # updates the frames of the game
     pygame.display.update()
 
-bg_img = pygame.image.load('board-01.png')
+
 bg_img = pygame.transform.scale(bg_img, (width, height))
 
 running = True
