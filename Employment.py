@@ -100,7 +100,7 @@ employ_ans_dict = {'Resume': ['Resume', 'Curriculum Vitae', 'Bio-data', 'Job App
                    'Electrician': ['Electrician'],
                    'Archaeology': ['Archaeology'],
                    'Glassblower': ['Glassblower'],
-                   'Civil Engineering': ['Civil Engineering'],
+                   'Civil Engineering': ['Civil Engineering','Mechanical Engineering', 'Electrical Engineering', 'Aerospace Engineering']
                    'Cosmetology': ['Cosmetology'],
                    'Radiology': ['Radiology'],
                    'Pastry Chef': ['Pastry Chef']}
