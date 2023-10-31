@@ -1,39 +1,87 @@
 import pygame
+import sys
 from pygame.locals import *
 
-class Square(pygame.sprite.Sprite):
-    def __init__(self):
-        super(Square, self).__init__()
-
-        self.surf = pygame.Surface((25,25))
-
-        self.surf.fill((0,200,255))
-        self.rect = self.surf.get_rect()
-
-
+# initialize constructor
 pygame.init()
 
-screen = pygame.display.set_mode((800,600))
+# screen ize
+width = 1600
+height = 900
 
-square1 = Square()
-square2 = Square()
-square3 = Square()
-square4 = Square()
+# open window
+window = pygame.display.set_mode((width, height))
 
-gameOn = True
+# language color
+langColor = (111, 191, 87)
 
-while gameOn:
+# Employment color
+employColor = (171, 147, 197)
+
+# Culture Color
+cultColor = (226, 145, 190)
+
+# Relationship Color
+RelatColor = (61, 142, 204)
+
+# Black Color
+blackColor = (35, 31, 32)
+
+# white Color
+whiteColor = ()
+
+# light shade of button
+color_light = (170, 170, 170)
+
+# dark shade of button
+color_dark = (100, 100, 100)
+
+# defining a font
+smallFont = pygame.font.SysFont('Corbel', 35)
+
+# rendering a text written in this font
+text = smallFont.render('quit', True, color)
+
+while True:
+    for ev in pygame.event.get():
+        if ev.type == pygame.QUIT:
+            pygame.quit()
+
+        # check if a mouse is clicked
+        if ev.type == pygame.MOUSEBUTTONDOWN:
+
+            # if the mouse is clicked on the button the game is terminated
+            if width / 2 <= mouse[0] <= width / 2 + 140 and height / 2 <= mouse[1] <= height / 2 + 40:
+                pygame.quit()
+
+    # fill screen with a color
+    screen.fill((60, 25, 60))
+
+    # stores the (x,y) coordinates into the variable as a tuple
+    mouse = pygame.mouse.get_pos()
+
+    # if mouse is hovered on a button it changes to lighter shade
+    if width / 2 <= mouse[0] <= width / 2 + 140 and height / 2 <= mouse[1] <= height / 2 + 40:
+        pygame.draw.rect(screen, color_light, [width / 2, height / 2, 140, 40])
+
+    else:
+        pygame.draw.rect(screen, color_dark, [width / 2, height / 2, 140, 40])
+
+    # superimposing the text onto our button
+    screen.blit(text, (width / 2 + 50, height / 2))
+
+    # updates the frames of the game
+    pygame.display.update()
+
+bg_img = pygame.image.load('board-01.png')
+bg_img = pygame.transform.scale(bg_img, (width, height))
+
+running = True
+
+while running:
+    window.blit(bg_img, (0, 0))
     for event in pygame.event.get():
-        if event.type == KEYDOWN:
-            if event.key == K_BACKSPACE:
-                gameOn = False
-        elif event.type == QUIT:
-            gameOn = False
-
-    screen.blit(square1.surf, (40,40))
-    screen.blit(square2.surf, (40, 530))
-    screen.blit(square3.surf, (730, 40))
-    screen.blit(square4.surf, (730, 530))
-
-    pygame.display.flip()
-
+        if event.type == QUIT:
+            running = False
+    pygame.display.update()
+pygame.quit()
