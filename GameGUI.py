@@ -14,6 +14,9 @@ height = 800
 bWidth = 150
 bheight = 75
 
+bAWidth = 75
+bAHeight = 75
+
 # Colors
 # language color
 langColor = (111, 191, 87)
@@ -37,15 +40,19 @@ color_dark = (100, 100, 100)
 smallFont = pygame.font.SysFont('Rockwell', 20)
 largeFont = pygame.font.SysFont('Rockwell', 40)
 mediumFont = pygame.font.SysFont('Rockwell', 30)
-cardFont = pygame.font.SysFont('Rockwell', 35)
+cardFont = pygame.font.SysFont('Rockwell', 50)
 
 # images
 background = pygame.image.load('board-01.png')
 background = pygame.transform.scale(background, (width, height))
 langCard = pygame.image.load('Langauge2-01.jpg')
+langCard = pygame.transform.scale(langCard, (width, height))
 employCard = pygame.image.load('Employment2-01.jpg')
+employCard = pygame.transform.scale(employCard, (width, height))
 cultCard = pygame.image.load('Culture2-01.jpg')
+cultCard = pygame.transform.scale(cultCard, (width, height))
 relateCard = pygame.image.load('Relationship2-01.jpg')
+relateCard = pygame.transform.scale(relateCard, (width, height))
 purpleButton = pygame.image.load('free button purple.png')
 purpleButton = pygame.transform.scale(purpleButton, (bWidth, bheight))
 pinkButton = pygame.image.load('free button pink.png')
@@ -55,9 +62,15 @@ greenButton = pygame.transform.scale(greenButton, (bWidth, bheight))
 blueButton = pygame.image.load('free button blue.png')
 blueButton = pygame.transform.scale(blueButton, (bWidth, bheight))
 menuOption01 = pygame.image.load('card menuu-01.png')
-menuOption01 = pygame.transform.scale(menuOption01,(width, height))
+menuOption01 = pygame.transform.scale(menuOption01, (width, height))
 menuOption02 = pygame.image.load('card menu again-01.png')
 menuOption02 = pygame.transform.scale(menuOption02, (width, height))
+
+# Button photos Trivia
+purpleButtonA = pygame.transform.scale(purpleButton, (bAWidth, bAHeight))
+pinkButtonA = pygame.transform.scale(pinkButton, (bAWidth, bAHeight))
+greenButtonA = pygame.transform.scale(greenButton, (bAWidth, bAHeight))
+blueButtonA = pygame.transform.scale(blueButton, (bAWidth, bAHeight))
 
 # open window
 screen = pygame.display.set_mode((width, height))
@@ -70,14 +83,18 @@ text = smallFont.render('quit', True, whiteColor)
 # dice value
 diceVal = 6
 players = 1
-boardArr = [(150, 825), (250, 725), (400, 750), (550, 800), (650, 820), (800, 790), (950, 760), (1100, 800),
-            (1250, 825),
-            (1350, 850)]
+answer = False
+boardArr = [(125, 700), (250, 650), (350, 675), (450, 725), (650, 700), (800, 700), (900, 700), (1050, 725),
+            (1150, 750),(1250, 750), (1400, 700), (1350, 600), (1250, 600), (1050, 600), (1100, 525), (1250, 525),
+            (1250, 450), (1150, 400), (1050, 425), (900, 450),(800, 500), (650, 550), (500, 550),(350, 550), (250, 550),
+            (100, 500), (100, 400), (150, 350), (300, 375), (400, 425), (500, 300), (650, 250), (750, 275), (900, 300),
+            (975, 275), (1125, 275), (1250, 275), (1350, 275), (1400, 175), (1350, 50), (1175, 75), (1075, 100),
+            (975, 150), (825, 155),(650,100), (600,100), (450,150),]
 
 
 def play_one():
     pygame.display.set_caption("Trivia")
-    pos = boardArr[9]
+    pos = boardArr[0]
     counter = 0
     dice_roll = 0
 
@@ -106,8 +123,9 @@ def play_one():
                         qa_rlst = GameFunctions.switch_dict(category)
                         lst_qa = qa_rlst[0]
                         ran_lst = qa_rlst[1]
-                        if trivia(lst_qa, ran_lst):
+                        if trivia(lst_qa, ran_lst, category):
                             pos += counter
+
         if players == 1:
             draw_circle(pos, blackColor, playScreen)
 
@@ -282,7 +300,7 @@ def menu():
 
     while True:
         screen.fill(blackColor)
-        screen.blit(menuOption02, (0,0))
+        screen.blit(menuOption02, (0, 0))
 
         menuMousePos = pygame.mouse.get_pos()
 
@@ -326,22 +344,120 @@ def menu():
 
 
 def draw_circle(pos, color, display):
-    pygame.draw.circle(display, color, pos, 10)
+    pygame.draw.circle(display, color, pos, 7)
 
 
-def trivia(lst_qa, ran_lst):
+def trivia(lst_qa, ran_lst, category):
     questions = lst_qa[0]
-    answer = lst_qa[1]
+    answerFinal = lst_qa[1]
 
     choice_one = ran_lst[0]
     choice_two = ran_lst[1]
     choice_three = ran_lst[2]
     choice_four = ran_lst[3]
 
-    # show question with choices below
-    # make choices button
-    # answer check true
+    match category:
+        case "employment":
+            pygame.display.set_caption("Employment")
+            window = employCard
+        case "culture":
+            pygame.display.set_caption("Culture")
+            window = cultCard
+        case "relationships":
+            pygame.display.set_caption("Relationships")
+            window = relateCard
+        case "language":
+            pygame.display.set_caption("Language")
+            window = langCard
+        case _:
+            raise ValueError("Case should be a string of either employment, culture, relationships, or language")
+
+    while True:
+        triviaScreen.blit(window, (0, 0))
+        triviaMousePos = pygame.mouse.get_pos()
+
+        questionText = cardFont.render(questions, True, blackColor)
+        questionRect = questionText.get_rect(center=(280, 100))
+
+        choiceOneText = mediumFont.render(choice_one, True, blackColor)
+        choiceOneRect = choiceOneText.get_rect(center = (350, 200))
+
+        choiceTwoText = mediumFont.render(choice_two, True, blackColor)
+        choiceTwoRect = choiceTwoText.get_rect(center=(350, 350))
+
+        choiceThreeText = mediumFont.render(choice_three, True, blackColor)
+        choiceThreeRect = choiceThreeText.get_rect(center=(350, 500))
+
+        choiceFourText = mediumFont.render(choice_four, True, blackColor)
+        choiceFourRect = choiceFourText.get_rect(center=(350, 650))
+
+        answerOneButton = pygamebutton.Button(image=pinkButtonA, pos=(280, 200), text_input='A',
+                                              font=mediumFont, base_color=blackColor, hovering_color=cultColor)
+        answerTwoButton = pygamebutton.Button(image=purpleButtonA, pos=(280, 350), text_input='B',
+                                              font=mediumFont, base_color=blackColor, hovering_color=employColor)
+        answerThreeButton = pygamebutton.Button(image=greenButtonA, pos=(280, 500), text_input='C',
+                                                font=mediumFont, base_color=blackColor, hovering_color=langColor)
+        answerFourButton = pygamebutton.Button(image=blueButtonA, pos=(280, 650), text_input='D',
+                                               font=mediumFont, base_color=blackColor, hovering_color=relaColor)
+
+        for button in [answerOneButton, answerTwoButton, answerThreeButton, answerFourButton]:
+            button.changeColor(triviaMousePos)
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if answerOneButton.checkForInput(triviaMousePos):
+                    return answerShow(choice_one, answerFinal, window)
+                if answerTwoButton.checkForInput(triviaMousePos):
+                    return answerShow(choice_two, answerFinal, window)
+                if answerThreeButton.checkForInput(triviaMousePos):
+                    return answerShow(choice_three, answerFinal, window)
+                if answerFourButton.checkForInput(triviaMousePos):
+                    return answerShow(choice_four, answerFinal, window)
+
+        screen.blit(questionText, questionRect)
+        screen.blit(choiceOneText, choiceOneRect)
+        screen.blit(choiceTwoText, choiceTwoRect)
+        screen.blit(choiceThreeText, choiceThreeRect)
+        screen.blit(choiceFourText, choiceFourRect)
+
+        pygame.display.update()
 
 
-menu()
-# play_one()
+def answerShow(choice, answerFinal, window):
+    pygame.display.set_caption("Answer")
+    triviaScreen.blit(window, (0,0))
+
+    while True:
+        answerText = cardFont.render(answerFinal, True, blackColor)
+        answerRect = answerText.get_rect(center=(280, 100))
+
+        screen.blit(answerText, answerRect)
+
+        pygame.display.update()
+
+        pygame.time.delay(15000)
+
+        return choice == answer
+
+def board(boardArr):
+    while True:
+        playScreen.blit(background, (0,0))
+        for point in boardArr:
+            draw_circle(point, blackColor, playScreen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+
+
+# menu()
+#play_one()
+board(boardArr)
+
