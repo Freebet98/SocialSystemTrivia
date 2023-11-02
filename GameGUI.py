@@ -30,17 +30,15 @@ relaColor = (61, 142, 204)
 blackColor = (35, 31, 32)
 # white Color
 whiteColor = (255, 255, 255)
-# light shade of button
-color_light = (170, 170, 170)
-# dark shade of button
-color_dark = (100, 100, 100)
+# cantalope
+playerTwoColor = (255, 161, 119)
 
 # Fonts
 # defining a font
 smallFont = pygame.font.SysFont('Rockwell', 20)
 largeFont = pygame.font.SysFont('Rockwell', 40)
 mediumFont = pygame.font.SysFont('Rockwell', 30)
-cardFont = pygame.font.SysFont('Rockwell', 50)
+cardFont = pygame.font.SysFont('Rockwell', 20)
 
 # images
 background = pygame.image.load('board-01.png')
@@ -82,21 +80,23 @@ text = smallFont.render('quit', True, whiteColor)
 
 # dice value
 diceVal = 6
-players = 1
-answer = False
+players = 2
 boardArr = [(125, 700), (250, 650), (350, 675), (450, 725), (650, 700), (800, 700), (900, 700), (1050, 725),
-            (1150, 750),(1250, 750), (1400, 700), (1350, 600), (1250, 600), (1050, 600), (1100, 525), (1250, 525),
-            (1250, 450), (1150, 400), (1050, 425), (900, 450),(800, 500), (650, 550), (500, 550),(350, 550), (250, 550),
+            (1150, 750), (1250, 750), (1400, 700), (1350, 600), (1250, 600), (1050, 600), (1100, 525), (1250, 525),
+            (1250, 450), (1150, 400), (1050, 425), (900, 450), (800, 500), (650, 550), (500, 550), (350, 550),
+            (250, 550),
             (100, 500), (100, 400), (150, 350), (300, 375), (400, 425), (500, 300), (650, 250), (750, 275), (900, 300),
             (975, 275), (1125, 275), (1250, 275), (1350, 275), (1400, 175), (1350, 50), (1175, 75), (1075, 100),
-            (975, 150), (825, 155),(650,100), (600,100), (450,150),]
+            (975, 150), (825, 155), (650, 100), (600, 100), (450, 150), (300, 200), (200, 175), (100, 125)]
 
 
 def play_one():
+    global boardArr
+    global diceVal
     pygame.display.set_caption("Trivia")
+    endpos = len(boardArr)
     pos = boardArr[0]
     counter = 0
-    dice_roll = 0
 
     while True:
         playScreen.blit(background, (0, 0))
@@ -116,33 +116,43 @@ def play_one():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rollDiceButton.checkForInput(playMousePos):
                     dice_roll = GameFunctions.roll_dice(diceVal)
-
-                    counter += dice_roll
-                    if counter > 0:
+                    if counter >= 0:
                         category = GameFunctions.check_spot(dice_roll, counter)
                         qa_rlst = GameFunctions.switch_dict(category)
                         lst_qa = qa_rlst[0]
                         ran_lst = qa_rlst[1]
                         if trivia(lst_qa, ran_lst, category):
-                            pos += counter
+                            try:
+                                counter += dice_roll
+                                pos = boardArr[counter]
+                            except:
+                                pos = boardArr[len(boardArr) - 1]
+        if pos == boardArr[endpos - 1]:
+            endMenu("Player One")
 
-        if players == 1:
-            draw_circle(pos, blackColor, playScreen)
-
+        draw_circle(pos, blackColor, playScreen)
         pygame.display.update()
 
 
 def play_two():
     pygame.display.set_caption("Trivia")
-    pos1 = (80, 800)
-    draw_circle(pos1, blackColor, playScreen)
-    pos2 = (70, 800)
-    draw_circle(pos2, blackColor, playScreen)
+    pos1 = boardArr[0]
+    pos2 = boardArr[0]
+    endpos = len(boardArr)
+    turn = 1
+    counterOne = 0
+    counterTwo = 0
 
     while True:
         playScreen.blit(background, (0, 0))
 
         playMousePos = pygame.mouse.get_pos()
+
+        playOneText = smallFont.render("Player One Turn", True, blackColor)
+        playOneRect = playOneText.get_rect(center=(875, 50))
+
+        playTwoText = smallFont.render("Player Two Turn", True, blackColor)
+        playTwoRect = playTwoText.get_rect(center=(875, 50))
 
         rollDiceButton = pygamebutton.Button(image=None, pos=(300, 100), text_input="Roll",
                                              font=smallFont, base_color=blackColor, hovering_color=langColor)
@@ -156,8 +166,47 @@ def play_two():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if rollDiceButton.checkForInput(playMousePos):
-                    diceRoll = GameFunctions.roll_dice(diceVal)
+                    if turn == 1:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterOne >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterOne)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterOne += dice_roll
+                                    pos1 = boardArr[counterOne]
+                                except:
+                                    pos1 = boardArr[len(boardArr) - 1]
+                        turn = 2
+                    if turn == 2:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterTwo >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterTwo)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterTwo += dice_roll
+                                    pos2 = boardArr[counterTwo]
+                                except:
+                                    pos2 = boardArr[len(boardArr) - 1]
+                        turn = 2
 
+        if turn == 1:
+            playScreen.blit(playOneText, playOneRect)
+        elif turn == 2:
+            playScreen.blit(playTwoText, playTwoRect)
+
+        if pos1 == boardArr[endpos - 1]:
+            endMenu("Player One")
+        elif pos2 == boardArr[endpos - 1]:
+            endMenu("Player Two")
+
+        draw_circle(pos1, blackColor, playScreen)
+        draw_circle(pos2, playerTwoColor, playScreen)
         pygame.display.update()
 
 
@@ -227,6 +276,8 @@ def play_four():
 
 def options():
     pygame.display.set_caption("Options")
+    global players
+    global diceVal
 
     while True:
         screen.fill(whiteColor)
@@ -377,19 +428,19 @@ def trivia(lst_qa, ran_lst, category):
         triviaMousePos = pygame.mouse.get_pos()
 
         questionText = cardFont.render(questions, True, blackColor)
-        questionRect = questionText.get_rect(center=(280, 100))
+        questionRect = questionText.get_rect(center=(850, 100))
 
-        choiceOneText = mediumFont.render(choice_one, True, blackColor)
-        choiceOneRect = choiceOneText.get_rect(center = (350, 200))
+        choiceOneText = smallFont.render(choice_one, True, blackColor)
+        choiceOneRect = choiceOneText.get_rect(center=(850, 200))
 
-        choiceTwoText = mediumFont.render(choice_two, True, blackColor)
-        choiceTwoRect = choiceTwoText.get_rect(center=(350, 350))
+        choiceTwoText = smallFont.render(choice_two, True, blackColor)
+        choiceTwoRect = choiceTwoText.get_rect(center=(850, 350))
 
-        choiceThreeText = mediumFont.render(choice_three, True, blackColor)
-        choiceThreeRect = choiceThreeText.get_rect(center=(350, 500))
+        choiceThreeText = smallFont.render(choice_three, True, blackColor)
+        choiceThreeRect = choiceThreeText.get_rect(center=(850, 500))
 
-        choiceFourText = mediumFont.render(choice_four, True, blackColor)
-        choiceFourRect = choiceFourText.get_rect(center=(350, 650))
+        choiceFourText = smallFont.render(choice_four, True, blackColor)
+        choiceFourRect = choiceFourText.get_rect(center=(850, 650))
 
         answerOneButton = pygamebutton.Button(image=pinkButtonA, pos=(280, 200), text_input='A',
                                               font=mediumFont, base_color=blackColor, hovering_color=cultColor)
@@ -429,35 +480,56 @@ def trivia(lst_qa, ran_lst, category):
 
 def answerShow(choice, answerFinal, window):
     pygame.display.set_caption("Answer")
-    triviaScreen.blit(window, (0,0))
 
     while True:
-        answerText = cardFont.render(answerFinal, True, blackColor)
-        answerRect = answerText.get_rect(center=(280, 100))
+        triviaScreen.blit(window, (0, 0))
+
+        answerText = largeFont.render(answerFinal, True, blackColor)
+        answerRect = answerText.get_rect(center=(850, 450))
 
         screen.blit(answerText, answerRect)
 
         pygame.display.update()
 
-        pygame.time.delay(15000)
+        pygame.time.delay(5000)
 
-        return choice == answer
+        return choice == answerFinal
 
-def board(boardArr):
+
+def endMenu(player):
+    pygame.display.set_caption("End Screen")
+
     while True:
-        playScreen.blit(background, (0,0))
-        for point in boardArr:
-            draw_circle(point, blackColor, playScreen)
+        screen.fill(blackColor)
+        screen.blit(menuOption01, (0, 0))
+        endMousPos = pygame.mouse.get_pos()
+
+        playerText = largeFont.render(player + " has won!", True, whiteColor)
+        playerRect = playerText.get_rect(center=(750, 200))
+
+        playAgainText = mediumFont.render("Would you like to play again?", True, whiteColor)
+        playAgainRect = playAgainText.get_rect(center=(750, 300))
+
+        yesButton = pygamebutton.Button(image=pinkButton, pos=(550, 550), text_input="Yes", font=smallFont,
+                                        base_color=blackColor, hovering_color=cultColor)
+        noButton = pygamebutton.Button(image=purpleButton, pos=(950, 550), text_input="No", font=smallFont,
+                                       base_color=blackColor, hovering_color=employColor)
+
+        for button in [yesButton, noButton]:
+            button.changeColor(endMousPos)
+            button.update(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if yesButton.checkForInput(endMousPos):
+                    menu()
+                if noButton.checkForInput(endMousPos):
+                    pygame.quit()
+                    sys.exit()
 
-        pygame.display.update()
 
-
-# menu()
-#play_one()
-board(boardArr)
-
+menu()
+# play_one()

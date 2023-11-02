@@ -21,7 +21,7 @@ def check_spot(dice_roll, current_count):
     elif count % 4 == 1:
         return "culture"
     elif count % 4 == 2:
-        return "relationships"
+        return "culture" #switch back to relationships
     else:
         return "language"
 
@@ -62,7 +62,7 @@ def dict_to_lst(dict_trivia):
     num = random.randrange(0, len(dict_trivia))
     keys = list(dict_trivia.keys())
     question = keys[num]
-    answer = dict_trivia[num]
+    answer = dict_trivia[question]
 
     lst_qa = [question, answer]
     return lst_qa
