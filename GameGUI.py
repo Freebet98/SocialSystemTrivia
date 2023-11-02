@@ -7,8 +7,12 @@ import GameFunctions
 pygame.init()
 # Variables
 # screen size
-width = 1600
-height = 900
+width = 1500
+height = 800
+
+# button size
+bWidth = 150
+bheight = 75
 
 # Colors
 # language color
@@ -30,8 +34,10 @@ color_dark = (100, 100, 100)
 
 # Fonts
 # defining a font
-smallFont = pygame.font.SysFont('Corbel', 35)
-cardFont = pygame.font.SysFont('Corbel', 35)
+smallFont = pygame.font.SysFont('Rockwell', 20)
+largeFont = pygame.font.SysFont('Rockwell', 40)
+mediumFont = pygame.font.SysFont('Rockwell', 30)
+cardFont = pygame.font.SysFont('Rockwell', 35)
 
 # images
 background = pygame.image.load('board-01.png')
@@ -40,6 +46,18 @@ langCard = pygame.image.load('Langauge2-01.jpg')
 employCard = pygame.image.load('Employment2-01.jpg')
 cultCard = pygame.image.load('Culture2-01.jpg')
 relateCard = pygame.image.load('Relationship2-01.jpg')
+purpleButton = pygame.image.load('free button purple.png')
+purpleButton = pygame.transform.scale(purpleButton, (bWidth, bheight))
+pinkButton = pygame.image.load('free button pink.png')
+pinkButton = pygame.transform.scale(pinkButton, (bWidth, bheight))
+greenButton = pygame.image.load('free button green.png')
+greenButton = pygame.transform.scale(greenButton, (bWidth, bheight))
+blueButton = pygame.image.load('free button blue.png')
+blueButton = pygame.transform.scale(blueButton, (bWidth, bheight))
+menuOption01 = pygame.image.load('card menuu-01.png')
+menuOption01 = pygame.transform.scale(menuOption01,(width, height))
+menuOption02 = pygame.image.load('card menu again-01.png')
+menuOption02 = pygame.transform.scale(menuOption02, (width, height))
 
 # open window
 screen = pygame.display.set_mode((width, height))
@@ -52,7 +70,8 @@ text = smallFont.render('quit', True, whiteColor)
 # dice value
 diceVal = 6
 players = 1
-boardArr = [(150, 825), (250, 725), (400, 750), (550, 800), (650, 820), (800, 790), (950, 760), (1100, 800), (1250, 825),
+boardArr = [(150, 825), (250, 725), (400, 750), (550, 800), (650, 820), (800, 790), (950, 760), (1100, 800),
+            (1250, 825),
             (1350, 850)]
 
 
@@ -67,8 +86,8 @@ def play_one():
 
         playMousePos = pygame.mouse.get_pos()
 
-        rollDiceButton = pygamebutton.Button(image=None, pos=(300, 100), text_input="Roll",
-                                             font=smallFont, base_color=blackColor, hovering_color=langColor)
+        rollDiceButton = pygamebutton.Button(image=pinkButton, pos=(300, 100), text_input="Roll",
+                                             font=smallFont, base_color=blackColor, hovering_color=cultColor)
         for button in [rollDiceButton]:
             button.changeColor(playMousePos)
             button.update(screen)
@@ -81,12 +100,14 @@ def play_one():
                 if rollDiceButton.checkForInput(playMousePos):
                     dice_roll = GameFunctions.roll_dice(diceVal)
 
-        counter += dice_roll
-        if counter > 0:
-            category = GameFunctions.check_spot(dice_roll, counter)
-            qa_rlst = GameFunctions.switch_dict(category)
-            lst_qa = qa_rlst[0]
-            ran_lst = qa_rlst[1]
+                    counter += dice_roll
+                    if counter > 0:
+                        category = GameFunctions.check_spot(dice_roll, counter)
+                        qa_rlst = GameFunctions.switch_dict(category)
+                        lst_qa = qa_rlst[0]
+                        ran_lst = qa_rlst[1]
+                        if trivia(lst_qa, ran_lst):
+                            pos += counter
         if players == 1:
             draw_circle(pos, blackColor, playScreen)
 
@@ -194,31 +215,31 @@ def options():
 
         option_mouse_pos = pygame.mouse.get_pos()
 
-        option_text = smallFont.render("OPTIONS", True, blackColor)
-        optionRect = option_text.get_rect(center=(800, 100))
-        dice_text = smallFont.render("Dice Options", True, blackColor)
-        dice_rect = dice_text.get_rect(center=(1000, 200))
-        playerText = smallFont.render("Player Options", True, blackColor)
-        playerRect = playerText.get_rect(center=(600, 200))
+        option_text = largeFont.render("OPTIONS", True, blackColor)
+        optionRect = option_text.get_rect(center=(750, 100))
+        dice_text = mediumFont.render("Dice Options", True, blackColor)
+        dice_rect = dice_text.get_rect(center=(950, 200))
+        playerText = mediumFont.render("Player Options", True, blackColor)
+        playerRect = playerText.get_rect(center=(550, 200))
 
-        diceFourButton = pygamebutton.Button(image=None, pos=(1000, 300), text_input="Four",
-                                             font=smallFont, base_color=blackColor, hovering_color=langColor)
-        diceSixButton = pygamebutton.Button(image=None, pos=(1000, 450), text_input="Six",
-                                            font=smallFont, base_color=blackColor, hovering_color=langColor)
-        diceTwelveButton = pygamebutton.Button(image=None, pos=(1000, 600), text_input='Twelve',
+        diceFourButton = pygamebutton.Button(image=pinkButton, pos=(950, 300), text_input="Four",
+                                             font=smallFont, base_color=blackColor, hovering_color=cultColor)
+        diceSixButton = pygamebutton.Button(image=purpleButton, pos=(950, 450), text_input="Six",
+                                            font=smallFont, base_color=blackColor, hovering_color=employColor)
+        diceTwelveButton = pygamebutton.Button(image=greenButton, pos=(950, 600), text_input='Twelve',
                                                font=smallFont, base_color=blackColor, hovering_color=langColor)
-        diceTwentyButton = pygamebutton.Button(image=None, pos=(1000, 750), text_input='Twenty',
-                                               font=smallFont, base_color=blackColor, hovering_color=langColor)
-        backButton = pygamebutton.Button(image=None, pos=(100, 100), text_input='BACK',
-                                         font=smallFont, base_color=blackColor, hovering_color=langColor)
-        playerOneButton = pygamebutton.Button(image=None, pos=(600, 300), text_input='One',
-                                              font=smallFont, base_color=blackColor, hovering_color=langColor)
-        playerTwoButton = pygamebutton.Button(image=None, pos=(600, 450), text_input='Two',
-                                              font=smallFont, base_color=blackColor, hovering_color=langColor)
-        playerThreeButton = pygamebutton.Button(image=None, pos=(600, 600), text_input='Three',
+        diceTwentyButton = pygamebutton.Button(image=blueButton, pos=(950, 750), text_input='Twenty',
+                                               font=smallFont, base_color=blackColor, hovering_color=relaColor)
+        backButton = pygamebutton.Button(image=pinkButton, pos=(100, 100), text_input='BACK',
+                                         font=smallFont, base_color=blackColor, hovering_color=cultColor)
+        playerOneButton = pygamebutton.Button(image=pinkButton, pos=(550, 300), text_input='One',
+                                              font=smallFont, base_color=blackColor, hovering_color=cultColor)
+        playerTwoButton = pygamebutton.Button(image=purpleButton, pos=(550, 450), text_input='Two',
+                                              font=smallFont, base_color=blackColor, hovering_color=employColor)
+        playerThreeButton = pygamebutton.Button(image=greenButton, pos=(550, 600), text_input='Three',
                                                 font=smallFont, base_color=blackColor, hovering_color=langColor)
-        playerFourButton = pygamebutton.Button(image=None, pos=(600, 750), text_input='Four',
-                                               font=smallFont, base_color=blackColor, hovering_color=langColor)
+        playerFourButton = pygamebutton.Button(image=blueButton, pos=(550, 750), text_input='Four',
+                                               font=smallFont, base_color=blackColor, hovering_color=relaColor)
 
         screen.blit(dice_text, dice_rect)
         screen.blit(option_text, optionRect)
@@ -260,20 +281,20 @@ def menu():
     pygame.display.set_caption("Menu")
 
     while True:
-
-        screen.fill(whiteColor)
+        screen.fill(blackColor)
+        screen.blit(menuOption02, (0,0))
 
         menuMousePos = pygame.mouse.get_pos()
 
-        menuText = smallFont.render("MAIN MENU", True, blackColor)
-        menuRect = menuText.get_rect(center=(800, 100))
+        menuText = largeFont.render("MAIN MENU", True, whiteColor)
+        menuRect = menuText.get_rect(center=(750, 100))
 
-        playButton = pygamebutton.Button(image=None, pos=(800, 250), text_input="PLAY",
-                                         font=smallFont, base_color=blackColor, hovering_color=langColor)
-        optionButton = pygamebutton.Button(image=None, pos=(800, 400), text_input="Dice Options",
+        playButton = pygamebutton.Button(image=purpleButton, pos=(750, 250), text_input="PLAY",
+                                         font=smallFont, base_color=blackColor, hovering_color=employColor)
+        optionButton = pygamebutton.Button(image=greenButton, pos=(750, 400), text_input="Dice Options",
                                            font=smallFont, base_color=blackColor, hovering_color=langColor)
-        quitButton = pygamebutton.Button(image=None, pos=(800, 550), text_input="Quit",
-                                         font=smallFont, base_color=blackColor, hovering_color=langColor)
+        quitButton = pygamebutton.Button(image=blueButton, pos=(750, 550), text_input="Quit",
+                                         font=smallFont, base_color=blackColor, hovering_color=relaColor)
 
         screen.blit(menuText, menuRect)
 
@@ -307,6 +328,7 @@ def menu():
 def draw_circle(pos, color, display):
     pygame.draw.circle(display, color, pos, 10)
 
+
 def trivia(lst_qa, ran_lst):
     questions = lst_qa[0]
     answer = lst_qa[1]
@@ -316,11 +338,10 @@ def trivia(lst_qa, ran_lst):
     choice_three = ran_lst[2]
     choice_four = ran_lst[3]
 
-    #create new screen
-    #show question with choices below
-    #make choices button
-    #answer check true
+    # show question with choices below
+    # make choices button
+    # answer check true
 
 
 menu()
-#play_one()
+# play_one()
