@@ -21,7 +21,7 @@ def check_spot(dice_roll, current_count):
     elif count % 4 == 1:
         return "culture"
     elif count % 4 == 2:
-        return "culture" #switch back to relationships
+        return "relationships"
     else:
         return "language"
 

@@ -30,8 +30,11 @@ relaColor = (61, 142, 204)
 blackColor = (35, 31, 32)
 # white Color
 whiteColor = (255, 255, 255)
-# cantalope
-playerTwoColor = (255, 161, 119)
+# PlayerColors
+playerOneColor = (45, 91, 107)
+playerTwoColor = (82, 73, 76)
+playerThreeColor = (51, 0, 59)
+playerFourColor = (166, 78, 70)
 
 # Fonts
 # defining a font
@@ -130,11 +133,13 @@ def play_one():
         if pos == boardArr[endpos - 1]:
             endMenu("Player One")
 
-        draw_circle(pos, blackColor, playScreen)
+        draw_circle(pos, playerOneColor, playScreen)
         pygame.display.update()
 
 
 def play_two():
+    global boardArr
+    global diceVal
     pygame.display.set_caption("Trivia")
     pos1 = boardArr[0]
     pos2 = boardArr[0]
@@ -148,13 +153,13 @@ def play_two():
 
         playMousePos = pygame.mouse.get_pos()
 
-        playOneText = smallFont.render("Player One Turn", True, blackColor)
+        playOneText = smallFont.render("Player One Turn", True, playerOneColor)
         playOneRect = playOneText.get_rect(center=(875, 50))
 
-        playTwoText = smallFont.render("Player Two Turn", True, blackColor)
+        playTwoText = smallFont.render("Player Two Turn", True, playerTwoColor)
         playTwoRect = playTwoText.get_rect(center=(875, 50))
 
-        rollDiceButton = pygamebutton.Button(image=None, pos=(300, 100), text_input="Roll",
+        rollDiceButton = pygamebutton.Button(image=pinkButton, pos=(300, 100), text_input="Roll",
                                              font=smallFont, base_color=blackColor, hovering_color=langColor)
         for button in [rollDiceButton]:
             button.changeColor(playMousePos)
@@ -180,7 +185,7 @@ def play_two():
                                 except:
                                     pos1 = boardArr[len(boardArr) - 1]
                         turn = 2
-                    if turn == 2:
+                    elif turn == 2:
                         dice_roll = GameFunctions.roll_dice(diceVal)
                         if counterTwo >= 0:
                             category = GameFunctions.check_spot(dice_roll, counterTwo)
@@ -193,7 +198,7 @@ def play_two():
                                     pos2 = boardArr[counterTwo]
                                 except:
                                     pos2 = boardArr[len(boardArr) - 1]
-                        turn = 2
+                        turn = 1
 
         if turn == 1:
             playScreen.blit(playOneText, playOneRect)
@@ -205,61 +210,40 @@ def play_two():
         elif pos2 == boardArr[endpos - 1]:
             endMenu("Player Two")
 
-        draw_circle(pos1, blackColor, playScreen)
+        draw_circle(pos1, playerOneColor, playScreen)
         draw_circle(pos2, playerTwoColor, playScreen)
         pygame.display.update()
 
 
 def play_three():
+    global boardArr
+    global diceVal
     pygame.display.set_caption("Trivia")
-    pos1 = (80, 800)
-    pos2 = (70, 800)
-    pos3 = (90, 800)
-    draw_circle(pos1, blackColor, playScreen)
-    draw_circle(pos2, blackColor, playScreen)
-    draw_circle(pos3, blackColor, playScreen)
+    pos1 = boardArr[0]
+    pos2 = boardArr[0]
+    pos3 = boardArr[0]
+    endpos = len(boardArr)
+    turn = 1
+    counterOne = 0
+    counterTwo = 0
+    counterThree = 0
 
     while True:
         playScreen.blit(background, (0, 0))
-
-        play_mouse_pos = pygame.mouse.get_pos()
-
-        diceRoll = pygamebutton.Button(image=None, pos=(300, 100), text_input="Roll",
-                                       font=smallFont, base_color=blackColor, hovering_color=langColor)
-        for button in [diceRoll]:
-            button.changeColor(play_mouse_pos)
-            button.update(screen)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if diceRoll.checkForInput(play_mouse_pos):
-                    diceRoll = GameFunctions.roll_dice(diceVal)
-
-        pygame.display.update()
-
-
-def play_four():
-    pygame.display.set_caption("Trivia")
-    pos1 = (80, 800)
-    pos2 = (70, 800)
-    pos3 = (90, 800)
-    pos4 = (100, 800)
-    draw_circle(pos1, blackColor, playScreen)
-    draw_circle(pos2, blackColor, playScreen)
-    draw_circle(pos3, blackColor, playScreen)
-    draw_circle(pos4, blackColor, playScreen)
-
-    while True:
-        playScreen.blit(background, (0, 0))
-
         playMousePos = pygame.mouse.get_pos()
 
-        roll_dice_button = pygamebutton.Button(image=None, pos=(300, 100), text_input="Roll",
-                                               font=smallFont, base_color=blackColor, hovering_color=langColor)
-        for button in [roll_dice_button]:
+        playOneText = smallFont.render("Player One Turn", True, playerOneColor)
+        playOneRect = playOneText.get_rect(center=(875, 50))
+
+        playTwoText = smallFont.render("Player Two Turn", True, playerTwoColor)
+        playTwoRect = playTwoText.get_rect(center=(875, 50))
+
+        playThreeText = smallFont.render("Player Two Turn", True, playerThreeColor)
+        playThreeRect = playThreeText.get_rect(center=(875, 50))
+
+        rollDiceButton = pygamebutton.Button(image=pinkButton, pos=(300, 100), text_input="Roll",
+                                             font=smallFont, base_color=blackColor, hovering_color=cultColor)
+        for button in [rollDiceButton]:
             button.changeColor(playMousePos)
             button.update(screen)
 
@@ -268,8 +252,193 @@ def play_four():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if roll_dice_button.checkForInput(playMousePos):
-                    diceRoll = GameFunctions.roll_dice(diceVal)
+                if rollDiceButton.checkForInput(playMousePos):
+                    if turn == 1:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterOne >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterOne)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterOne += dice_roll
+                                    pos1 = boardArr[counterOne]
+                                except:
+                                    pos1 = boardArr[len(boardArr) - 1]
+                        turn = 2
+                    elif turn == 2:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterTwo >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterTwo)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterTwo += dice_roll
+                                    pos2 = boardArr[counterTwo]
+                                except:
+                                    pos2 = boardArr[len(boardArr) - 1]
+                        turn = 3
+                    elif turn == 3:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterThree >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterThree)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterThree += dice_roll
+                                    pos3 = boardArr[counterThree]
+                                except:
+                                    pos3 = boardArr[len(boardArr) - 1]
+                        turn = 1
+
+        if turn == 1:
+            playScreen.blit(playOneText, playOneRect)
+        elif turn == 2:
+            playScreen.blit(playTwoText, playTwoRect)
+        elif turn == 3:
+            playScreen.blit(playThreeText, playThreeRect)
+
+        if pos1 == boardArr[endpos - 1]:
+            endMenu("Player One")
+        elif pos2 == boardArr[endpos - 1]:
+            endMenu("Player Two")
+        elif pos3 == boardArr[endpos - 1]:
+            endMenu("Player Three")
+
+        draw_circle(pos1, playerOneColor, playScreen)
+        draw_circle(pos2, playerTwoColor, playScreen)
+        draw_circle(pos3, playerThreeColor, playScreen)
+
+        pygame.display.update()
+
+
+def play_four():
+    global boardArr
+    global diceVal
+    pygame.display.set_caption("Trivia")
+    pos1 = boardArr[0]
+    pos2 = boardArr[0]
+    pos3 = boardArr[0]
+    pos4 = boardArr[0]
+    endpos = len(boardArr)
+    turn = 1
+    counterOne = 0
+    counterTwo = 0
+    counterThree = 0
+    counterFour = 0
+
+    while True:
+        playScreen.blit(background, (0, 0))
+        playMousePos = pygame.mouse.get_pos()
+
+        playOneText = smallFont.render("Player One Turn", True, playerOneColor)
+        playOneRect = playOneText.get_rect(center=(875, 50))
+
+        playTwoText = smallFont.render("Player Two Turn", True, playerTwoColor)
+        playTwoRect = playTwoText.get_rect(center=(875, 50))
+
+        playThreeText = smallFont.render("Player Two Turn", True, playerThreeColor)
+        playThreeRect = playThreeText.get_rect(center=(875, 50))
+
+        playFourText = smallFont.render("Player Two Turn", True, playerFourColor)
+        playFourRect = playThreeText.get_rect(center=(875, 50))
+
+        rollDiceButton = pygamebutton.Button(image=pinkButton, pos=(300, 100), text_input="Roll",
+                                             font=smallFont, base_color=blackColor, hovering_color=cultColor)
+        for button in [rollDiceButton]:
+            button.changeColor(playMousePos)
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if rollDiceButton.checkForInput(playMousePos):
+                    if turn == 1:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterOne >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterOne)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterOne += dice_roll
+                                    pos1 = boardArr[counterOne]
+                                except:
+                                    pos1 = boardArr[len(boardArr) - 1]
+                        turn = 2
+                    elif turn == 2:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterTwo >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterTwo)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterTwo += dice_roll
+                                    pos2 = boardArr[counterTwo]
+                                except:
+                                    pos2 = boardArr[len(boardArr) - 1]
+                        turn = 3
+                    elif turn == 3:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterThree >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterThree)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterThree += dice_roll
+                                    pos3 = boardArr[counterThree]
+                                except:
+                                    pos3 = boardArr[len(boardArr) - 1]
+                        turn = 4
+                    elif turn == 4:
+                        dice_roll = GameFunctions.roll_dice(diceVal)
+                        if counterFour >= 0:
+                            category = GameFunctions.check_spot(dice_roll, counterFour)
+                            qa_rlst = GameFunctions.switch_dict(category)
+                            lst_qa = qa_rlst[0]
+                            ran_lst = qa_rlst[1]
+                            if trivia(lst_qa, ran_lst, category):
+                                try:
+                                    counterFour += dice_roll
+                                    pos4 = boardArr[counterFour]
+                                except:
+                                    pos4 = boardArr[len(boardArr) - 1]
+                        turn = 1
+
+        if turn == 1:
+            playScreen.blit(playOneText, playOneRect)
+        elif turn == 2:
+            playScreen.blit(playTwoText, playTwoRect)
+        elif turn == 3:
+            playScreen.blit(playThreeText, playThreeRect)
+        elif turn == 4:
+            playScreen.blit(playFourText, playFourRect)
+
+        if pos1 == boardArr[endpos - 1]:
+            endMenu("Player One")
+        elif pos2 == boardArr[endpos - 1]:
+            endMenu("Player Two")
+        elif pos3 == boardArr[endpos - 1]:
+            endMenu("Player Three")
+        elif pos4 == boardArr[endpos - 1]:
+            endMenu("Player Four")
+
+        draw_circle(pos1, playerOneColor, playScreen)
+        draw_circle(pos2, playerTwoColor, playScreen)
+        draw_circle(pos3, playerThreeColor, playScreen)
+        draw_circle(pos4, playerFourColor, playScreen)
 
         pygame.display.update()
 

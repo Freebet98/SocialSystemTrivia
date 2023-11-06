@@ -45,12 +45,11 @@ employ_dict = {
     'What is the ability to understand and manage conflicts in a constructive manner called?': 'Conflict resolution',
     'What is the ability to deliver compelling and persuasive presentations known as?': 'Presentation skills',
     'What profession involves the repair and maintenance of electrical systems in buildings?': 'Electrician',
-    'Which career field involves the study of past human societies through artifacts and fossils?': 'Archaeology',
-    'What do we call a person who works with glass, shaping it into various forms and objects?': 'Glassblower',
     'What is the branch of engineering that deals with the design and construction of structures?': 'Civil Engineering',
     'What is the profession that focuses on creating and styling hair and makeup for clients?': 'Cosmetology',
     'Which career field specializes in diagnosing and treating diseases through medical imaging?': 'Radiology',
-    'In the culinary arts, what do we call a chef who specializes in desserts and pastries?': 'Pastry Chef'}
+    'In the culinary arts, what do we call a chef who specializes in desserts and pastries?': 'Pastry Chef'
+}
 
 employ_ans_dict = {'Resume': ['Resume', 'Curriculum Vitae', 'Bio-data', 'Job Application'],
                    'United States': ['United States', 'United Kingdom', 'Canada', 'Germany'],
@@ -96,11 +95,10 @@ employ_ans_dict = {'Resume': ['Resume', 'Curriculum Vitae', 'Bio-data', 'Job App
                    'Cultural competence': ['Cultural competence', 'Geographical knowledge', 'Culinary experience', 'Mathematical proficiency'],
                    'Creativity': ['Creativity', 'Originality', 'Imagination', 'Invention'],
                    'Conflict resolution': ['Conflict resolution', 'Conflict avoidance', 'Conflict escalation', 'Conflict creation'],
-                   'Presentation skills': ['Presentation skills'],
-                   'Electrician': ['Electrician'],
-                   'Archaeology': ['Archaeology'],
-                   'Glassblower': ['Glassblower'],
+                   'Presentation skills': ['Presentation skills', 'Communication Skills', 'Speaking Skills', 'Public Speaking Skills'],
+                   'Electrician': ['Electrician', 'Painter', 'Construction', 'Engineering'],
                    'Civil Engineering': ['Civil Engineering','Mechanical Engineering', 'Electrical Engineering', 'Aerospace Engineering'],
-                   'Cosmetology': ['Cosmetology'],
-                   'Radiology': ['Radiology'],
-                   'Pastry Chef': ['Pastry Chef']}
+                   'Cosmetology': ['Cosmetology', 'prosthetics', 'Special Effects Makeup Artist', 'Costume Designer'],
+                   'Radiology': ['Radiology', 'Sonography', 'Nuclear Medicine', 'Neuroscience'],
+                   'Pastry Chef': ['Pastry Chef', 'Sous-chef', 'Commis Chef', 'Chef de partie']
+                   }
