@@ -83,7 +83,7 @@ text = smallFont.render('quit', True, whiteColor)
 
 # dice value
 diceVal = 6
-players = 2
+players = 1
 boardArr = [(125, 700), (250, 650), (350, 675), (450, 725), (650, 700), (800, 700), (900, 700), (1050, 725),
             (1150, 750), (1250, 750), (1400, 700), (1350, 600), (1250, 600), (1050, 600), (1100, 525), (1250, 525),
             (1250, 450), (1150, 400), (1050, 425), (900, 450), (800, 500), (650, 550), (500, 550), (350, 550),
@@ -125,11 +125,12 @@ def play_one():
                         lst_qa = qa_rlst[0]
                         ran_lst = qa_rlst[1]
                         if trivia(lst_qa, ran_lst, category):
-                            try:
-                                counter += dice_roll
-                                pos = boardArr[counter]
-                            except:
+                            counter += dice_roll
+                            if counter > (endpos - 1):
                                 pos = boardArr[len(boardArr) - 1]
+                            else:
+                                pos = boardArr[counter]
+
         if pos == boardArr[endpos - 1]:
             endMenu("Player One")
 
@@ -179,11 +180,11 @@ def play_two():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterOne += dice_roll
-                                    pos1 = boardArr[counterOne]
-                                except:
+                                counterOne += dice_roll
+                                if counterOne > (endpos - 1):
                                     pos1 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos1 = boardArr[counterOne]
                         turn = 2
                     elif turn == 2:
                         dice_roll = GameFunctions.roll_dice(diceVal)
@@ -193,11 +194,11 @@ def play_two():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterTwo += dice_roll
-                                    pos2 = boardArr[counterTwo]
-                                except:
+                                counterTwo += dice_roll
+                                if counterTwo > (endpos - 1):
                                     pos2 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos2 = boardArr[counterTwo]
                         turn = 1
 
         if turn == 1:
@@ -261,11 +262,11 @@ def play_three():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterOne += dice_roll
-                                    pos1 = boardArr[counterOne]
-                                except:
+                                counterOne += dice_roll
+                                if counterOne > (endpos - 1):
                                     pos1 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos1 = boardArr[counterOne]
                         turn = 2
                     elif turn == 2:
                         dice_roll = GameFunctions.roll_dice(diceVal)
@@ -275,11 +276,11 @@ def play_three():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterTwo += dice_roll
-                                    pos2 = boardArr[counterTwo]
-                                except:
+                                counterTwo += dice_roll
+                                if counterTwo > (endpos - 1):
                                     pos2 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos2 = boardArr[counterTwo]
                         turn = 3
                     elif turn == 3:
                         dice_roll = GameFunctions.roll_dice(diceVal)
@@ -289,11 +290,11 @@ def play_three():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterThree += dice_roll
-                                    pos3 = boardArr[counterThree]
-                                except:
+                                counterThree += dice_roll
+                                if counterThree > (endpos - 1):
                                     pos3 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos3 = boardArr[counterThree]
                         turn = 1
 
         if turn == 1:
@@ -368,11 +369,11 @@ def play_four():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterOne += dice_roll
-                                    pos1 = boardArr[counterOne]
-                                except:
+                                counterOne += dice_roll
+                                if counterOne > (endpos - 1):
                                     pos1 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos1 = boardArr[counterOne]
                         turn = 2
                     elif turn == 2:
                         dice_roll = GameFunctions.roll_dice(diceVal)
@@ -382,11 +383,11 @@ def play_four():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterTwo += dice_roll
-                                    pos2 = boardArr[counterTwo]
-                                except:
+                                counterTwo += dice_roll
+                                if counterTwo > (endpos - 1):
                                     pos2 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos2 = boardArr[counterTwo]
                         turn = 3
                     elif turn == 3:
                         dice_roll = GameFunctions.roll_dice(diceVal)
@@ -396,11 +397,11 @@ def play_four():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterThree += dice_roll
-                                    pos3 = boardArr[counterThree]
-                                except:
+                                counterThree += dice_roll
+                                if counterThree > (endpos - 1):
                                     pos3 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos3 = boardArr[counterThree]
                         turn = 4
                     elif turn == 4:
                         dice_roll = GameFunctions.roll_dice(diceVal)
@@ -410,11 +411,11 @@ def play_four():
                             lst_qa = qa_rlst[0]
                             ran_lst = qa_rlst[1]
                             if trivia(lst_qa, ran_lst, category):
-                                try:
-                                    counterFour += dice_roll
-                                    pos4 = boardArr[counterFour]
-                                except:
+                                counterFour += dice_roll
+                                if counterFour > (endpos - 1):
                                     pos4 = boardArr[len(boardArr) - 1]
+                                else:
+                                    pos4 = boardArr[counterFour]
                         turn = 1
 
         if turn == 1:
@@ -529,7 +530,7 @@ def menu():
 
         playButton = pygamebutton.Button(image=purpleButton, pos=(750, 250), text_input="PLAY",
                                          font=smallFont, base_color=blackColor, hovering_color=employColor)
-        optionButton = pygamebutton.Button(image=greenButton, pos=(750, 400), text_input="Dice Options",
+        optionButton = pygamebutton.Button(image=greenButton, pos=(750, 400), text_input="Options",
                                            font=smallFont, base_color=blackColor, hovering_color=langColor)
         quitButton = pygamebutton.Button(image=blueButton, pos=(750, 550), text_input="Quit",
                                          font=smallFont, base_color=blackColor, hovering_color=relaColor)
@@ -671,7 +672,7 @@ def endMenu(player):
     while True:
         screen.fill(blackColor)
         screen.blit(menuOption01, (0, 0))
-        endMousPos = pygame.mouse.get_pos()
+        endMousePos = pygame.mouse.get_pos()
 
         playerText = largeFont.render(player + " has won!", True, whiteColor)
         playerRect = playerText.get_rect(center=(750, 200))
@@ -685,7 +686,7 @@ def endMenu(player):
                                        base_color=blackColor, hovering_color=employColor)
 
         for button in [yesButton, noButton]:
-            button.changeColor(endMousPos)
+            button.changeColor(endMousePos)
             button.update(screen)
 
         for event in pygame.event.get():
@@ -693,12 +694,14 @@ def endMenu(player):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if yesButton.checkForInput(endMousPos):
+                if yesButton.checkForInput(endMousePos):
                     menu()
-                if noButton.checkForInput(endMousPos):
+                if noButton.checkForInput(endMousePos):
                     pygame.quit()
                     sys.exit()
+        screen.blit(playerText, playerRect)
+        screen.blit(playAgainText, playAgainRect)
+        pygame.display.update()
 
 
 menu()
-# play_one()
